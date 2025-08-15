@@ -2,7 +2,7 @@ import Modal from "../UI/Modal";
 
 import "./cart.css";
 
-function CartItem({ id, name, image, quantity, onDecQuantity, onIncQuantity}) {
+function CartItem({ id, name, image, quantity, onDecQuantity, onIncQuantity }) {
   return (
     <div key={id} className="cart-item">
       <div className="item-img">
@@ -34,12 +34,17 @@ function CartItem({ id, name, image, quantity, onDecQuantity, onIncQuantity}) {
   );
 }
 
-
-function Cart({showCart,closeCart, cartItems,onDecQuantity,onIncQuantity}){
-    return (
-    <Modal showCart={showCart} closeCart={closeCart}>
-        <div className="cart-container">
-          <p className="cart-heading">Cart</p>
+function Cart({
+  showCart,
+  closeCart,
+  cartItems,
+  onDecQuantity,
+  onIncQuantity,
+}) {
+  return (
+    <Modal show={showCart} onClose={closeCart}>
+      <div className="cart-container">
+        <p className="cart-heading">Cart</p>
         {cartItems.length === 0 ? (
           <div className="empty-cart">Cart is empty</div>
         ) : (
@@ -55,7 +60,7 @@ function Cart({showCart,closeCart, cartItems,onDecQuantity,onIncQuantity}){
             />
           ))
         )}
-         <div className="cart-buttons">
+        <div className="cart-buttons">
           <button className="black-button close-cart" onClick={closeCart}>
             Close
           </button>
@@ -65,11 +70,9 @@ function Cart({showCart,closeCart, cartItems,onDecQuantity,onIncQuantity}){
             </button>
           )}
         </div>
-        </div>
-
+      </div>
     </Modal>
-    );
-
+  );
 }
 
-export default Cart
+export default Cart;
