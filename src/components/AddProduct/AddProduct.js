@@ -1,12 +1,17 @@
-
+import { useRef } from "react";
 import Modal from "../UI/Modal";
 
 import "./AddProduct.css";
 
-function AddProduct({ showAddProduct, closeAddProduct }) {
+function AddProduct({ showAddProduct, closeAddProduct, onAddProduct }) {
+  const nameRef = useRef();
 
   const handleSubmit = (event) => {
-   
+    event.preventDefault();
+    // console.log(nameRef.current.value);
+    const nameValue=nameRef.current.value; 
+
+    onAddProduct(nameValue);
   };
 
   return (
@@ -17,10 +22,7 @@ function AddProduct({ showAddProduct, closeAddProduct }) {
           <label htmlFor="productName" className="form-label">
             Enter Product Name
           </label>
-          <input
-           
-            className="form-input"
-          />
+          <input className="form-input" name="product-name" ref={nameRef} />
           <button type="submit" className="submit-button">
             Add Product
           </button>
