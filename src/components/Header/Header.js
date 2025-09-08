@@ -1,6 +1,9 @@
+import AppContext from "../../store/app-context";
 import "./Header.css";
+import { useContext } from "react";
 
-function Header({ onCartClick, onAddProductClick }) {
+function Header( ) {
+  const {openCart,openAddProduct}=useContext(AppContext);
   return (
     <div className="header">
       <h1>This is React store</h1>
@@ -8,12 +11,12 @@ function Header({ onCartClick, onAddProductClick }) {
        <div>
             <button
             className="yellow-button"
-            onClick={onAddProductClick}
+            onClick={openAddProduct}
             style={{ marginRight: "20px" }}
             >
             Add Product
             </button>
-            <button className="yellow-button" onClick={onCartClick}>
+            <button className="yellow-button" onClick={openCart}>
             Cart
             </button>
       </div>
