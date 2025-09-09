@@ -2,7 +2,7 @@
 import { useContext } from "react";
 import "./Products.css";
 import AppContext from "../../store/app-context";
-
+import { CircleLoader } from "react-spinners";
 function Product({name, id,image}){
   const {handleAddToCart}=useContext(AppContext);
     return <div key={id} className="product">
@@ -14,7 +14,11 @@ function Product({name, id,image}){
     
 }
 function Products(){
-  const {products}=useContext(AppContext);
+  
+  const {products,loading}=useContext(AppContext);
+  if (loading) {
+   return <CircleLoader />
+  }
     return (<div className="products-container"> 
 
       {

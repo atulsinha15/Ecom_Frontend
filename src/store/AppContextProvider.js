@@ -1,15 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AppContext from "./app-context";
-import productData from "../data/products.json";
+
 import { useState } from "react";
 
-
- const AppContextProvider = ({ children }) => {
+const AppContextProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
   const [showCart, setShowCart] = useState(false);
-
+  const [loading,setLoading]=useState(false);
   const [showAddProduct, setShowAddProduct] = useState(false);
-  const [products, setProducts] = useState(productData);
+  const [products, setProducts] = useState([]);
 
   const openCart = () => setShowCart(true);
   const closeCart = () => setShowCart(false);
@@ -53,19 +52,36 @@ import { useState } from "react";
     setCartItems(newCartItems);
   };
 
-    const handleAddProduct = (productName) => {
+  const handleAddProduct = (productName) => {
     setProducts((prev) => [
       ...prev,
       { id: prev.length + 1, name: productName, image: "default_product.png" },
     ]);
-    closeAddProduct();//close modal after adding
+    closeAddProduct(); //close modal after adding
   };
 
-  const appContextValue ={
+  useEffect(() => {
+    const fetchProducts = async () => {
+        setLoading(true);
+      try {
+        const response = await fetch(
+          "https://ecomdb-71424-default-rtdb.firebaseio.com/products.json"
+        );
+        const data = await response.json();
+        setProducts(data);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchProducts();
+  }, []);
+  const appContextValue = {
     cartItems,
     products,
     showAddProduct,
     showCart,
+    loading,
     openCart,
     closeCart,
     handleAddProduct,
@@ -74,10 +90,11 @@ import { useState } from "react";
     handleAddToCart,
     closeAddProduct,
     openAddProduct,
-
-  }
+  };
   return (
-    <AppContext.Provider value={appContextValue}>{children}</AppContext.Provider>
+    <AppContext.Provider value={appContextValue}>
+      {children}
+    </AppContext.Provider>
   );
 };
 

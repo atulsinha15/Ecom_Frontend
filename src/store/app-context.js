@@ -5,6 +5,7 @@ const AppContext=createContext({
     products:[],
     showAddProduct:false,
     showCart:false,
+    loading:false,
     openCart: ()=>{},
     closeCart: ()=>{},
     handleAddProduct: ()=>{},
